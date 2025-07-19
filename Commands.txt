@@ -1,4 +1,25 @@
+Step 1: Setup Project Structure
+mkdir playwright_bdd_framework
+cd playwright_bdd_framework
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
 
+Step 2: Install Required Packages
+pip install playwright behave pytest pytest-bdd
+pip install allure-behave  # Optional for reporting
+pip install python-dotenv  # For env configs
+python -m playwright install
+pip install behave-html-formatter
+pip install pytest pytest-bdd pytest-xdist playwright
+python -m playwright install
+
+✅ How to Run It
+Headless Mode:
+
+python test_runner.py --tag="@login"
+Debug/Headful Mode:
+
+python test_runner.py --tag="@login" --debug
 
 
 
