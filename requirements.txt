@@ -1,0 +1,23 @@
+# === Core BDD and browser automation ===
+behave
+playwright
+
+# === For HTML report generation ===
+behave-html-formatter @ git+https://github.com/OpusVL/behave-html-formatter.git
+
+# === Optional: For file handling, CLI, etc. ===
+colorama
+tqdm
+
+# === GUI Support ===
+tk
+
+# === Testing tools (for future pytest integration) ===
+pytest
+pytest-html
+
+# === Parallel support if you want behave-parallel in future ===
+# behave-parallel @ git+https://github.com/seleniumbase/behave-parallel.git  # Optional
+
+# === Recommended for consistent installs ===
+setuptools

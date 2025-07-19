@@ -1,0 +1,125 @@
+
+
+
+
+
+
+
+
+
+
+
+
+✅ HTML Reporting Configuration
+Generate HTML Report using behave-html-formatter.
+
+Run this command:
+
+behave -f pretty -f behave_html_formatter:HTMLFormatter -o reports/html_report.html --tags=@login
+
+✅ Run Feature Files by Tag
+Run only scenarios with @login tag:
+
+behave --tags=@login
+
+Run multiple tags (AND):
+
+behave --tags="@login and @smoke"
+
+✅ Run All with HTML Report
+
+behave -f pretty -f behave_html_formatter:HTMLFormatter -o reports/html_report.html
+Open the report:
+
+open reports/html_report.html  # macOS/Linux
+start reports/html_report.html  # Windows
+
+✅ How to Use It test_runner.py
+🛠 Step 1: Set Your Tags
+In test_runner.py, modify this line:
+
+TAG_EXPRESSION = "@login or @smoke"
+You can use:
+
+@tag1 or @tag2
+
+@tag1 and @tag2
+
+not @skip
+
+🛠 Step 2: Run the Tests
+From the root of your project (where features/ and reports/ folders are):
+
+python tests/test_runner.py
+
+📝 Reports
+You’ll get one report per .feature file inside reports/:
+
+reports/login.html
+reports/search.html
+
+Just open them in any browser.
+
+✅ Summary of Features
+Feature	                         Supported
+Tag-based                        filtering	✅
+AND/OR tag expressions	✅
+HTML reports per file	✅
+Parallel execution	✅
+Friendly CLI-free config	✅
+
+
+✅ How to Use
+Save this file as tests/test_runner_gui.py
+
+Run the GUI:
+
+python tests/test_runner_gui.py
+
+🔹 Run it after tests:
+python combine_html_reports.py
+Then open:
+
+start reports/combined_report.html  # Windows
+open reports/combined_report.html   # macOS/Linux
+✅ Summary
+Feature	File
+Tkinter GUI Test Runner	tests/test_runner_gui.py
+Combine All HTML Reports	combine_html_reports.py
+Individual Reports	reports/*.html
+One HTML Report for All	reports/combined_report.html
+
+
+
+start reports/login.html
+
+
+✅ How to Use
+Update this line with your tag expression:
+
+TAG_EXPRESSION = "@login or @smoke"
+Use @all to run everything:
+
+TAG_EXPRESSION = "@all"
+Run the test runner from project root:
+
+python tests/test_runner.py
+Reports will be generated in the reports/ folder as:
+
+reports/login.html
+reports/checkout.html
+...
+✅ Example Terminal Output
+🚀 Running with tag filter: @login
+🧪 Found 2 feature file(s).
+▶️ Running: cd "C:\YourProject" && behave "features\login.feature" --tags="@login" ...
+...
+✅ Test execution finished.
+📁 Reports are in: reports
+✅ Summary
+Feature	Supported in test_runner.py
+Parallel feature execution	✅ Yes
+Tag filtering	✅ Yes (@login, @smoke)
+HTML report per feature	✅ Yes
+Friendly CLI config	✅ One file to edit & run
+Same behavior as GUI	✅ Matches test_runner_gui.py

@@ -1,0 +1,38 @@
+name: Playwright Behave CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m venv venv
+        source venv/bin/activate
+        pip install -r requirements.txt
+        python -m playwright install
+
+    - name: Run tests and generate HTML report
+      run: |
+        source venv/bin/activate
+        behave -f pretty -f behave_html_formatter:HTMLFormatter -o reports/html_report.html
+
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v4
+      with:
+        name: html-report
+        path: reports/html_report.html
