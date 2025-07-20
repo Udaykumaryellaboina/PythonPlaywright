@@ -19,7 +19,7 @@ Headless Mode:
 python test_runner.py --tag="@login"
 Debug/Headful Mode:
 
-python test_runner.py --tag="@login" --debug
+python Tests/test_runner.py --tag="@login" --debug
 
 
 

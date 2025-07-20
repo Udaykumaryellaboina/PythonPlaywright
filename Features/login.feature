@@ -1,7 +1,9 @@
 @smoke @login
-Feature: Login Feature
+@Submit
+Feature: Submit Ajax Form
 
-  Scenario: Successful login with valid credentials
-    Given the user launches the browser
-    When the user logs in with username "admin" and password "admin123"
-    Then the user should see a welcome message
+  Scenario: Submit Ajax Form and verify success
+    Given the user navigates to Url
+    When the user clicks on "Ajax Form Submit"
+    And the user submits the form with name "John Doe" and comment "Testing Ajax form"
+    Then the user should see the message "Form submitted Successfully!"

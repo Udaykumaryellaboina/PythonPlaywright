@@ -1,22 +1,22 @@
 from behave import given, when, then
-from Pages.login_page import LoginPage
-from playwright.sync_api import sync_playwright
-from Utils.config import BASE_URL, HEADLESS
+from Pages.home_page import HomePage
+from Pages.ajax_form_page import AjaxFormPage
+from Utils.config import BASE_URL
 
-@given("the user launches the browser")
-def step_launch_browser(context):
-    context.playwright = sync_playwright().start()
-    context.browser = context.playwright.chromium.launch(headless=HEADLESS)
-    context.page = context.browser.new_page()
+@given("the user navigates to Url")
+def step_navigate_to_url(context):
     context.page.goto(BASE_URL)
-    context.login_page = LoginPage(context.page)
+    context.home_page = HomePage(context.page)
 
-@when('the user logs in with username "{username}" and password "{password}"')
-def step_login(context, username, password):
-    context.login_page.login(username, password)
+@when('the user clicks on "{link_text}"')
+def step_click_on_menu(context, link_text):
+    context.home_page.click_menu(link_text)
 
-@then("the user should see a welcome message")
-def step_verify_login(context):
-    assert context.login_page.is_login_successful()
-    context.browser.close()
-    context.playwright.stop()
+@when('the user submits the form with name "{name}" and comment "{comment}"')
+def step_fill_ajax_form(context, name, comment):
+    context.ajax_form_page = AjaxFormPage(context.page)
+    context.ajax_form_page.submit_form(name, comment)
+
+@then('the user should see the message "{expected_text}"')
+def step_assert_success_message(context, expected_text):
+    context.ajax_form_page.assert_submission_message(expected_text)

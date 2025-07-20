@@ -1,0 +1,62 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.log
+*.sqlite3
+*.db
+*.venv
+
+.venv/
+venv/
+ENV/
+env/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+
+# --- Playwright Reports ---
+reports/*.png
+reports/*.zip
+reports/*.html
+reports/**/*.png
+reports/**/*.zip
+reports/**/*.html
+
+# Optional: if you save videos or traces in a folder
+traces/
+videos/
+
+# --- JUnit or Allure style reports (optional) ---
+allure-results/
+junit-report/
+test-results/
+
+# --- VS Code ---
+.vscode/
+
+# --- JetBrains IDEs (PyCharm, etc.) ---
+.idea/
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Compiled files ---
+*.so
+*.dll
+*.dylib
+
+# --- Coverage ---
+htmlcov/
+.coverage
+coverage.xml
+*.cover
+.cache
+
+# --- Build ---
+build/
+dist/
+*.egg-info/
+
