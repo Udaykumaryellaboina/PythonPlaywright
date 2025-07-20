@@ -1,62 +1,41 @@
-# --- Python ---
+# Python
 __pycache__/
 *.py[cod]
 *.pyo
+*.pyd
+*.pyc
+*.egg
+*.egg-info/
+dist/
+build/
 *.log
-*.sqlite3
-*.db
-*.venv
 
-.venv/
+# Virtual environments
 venv/
 ENV/
-env/
-.Python
-pip-log.txt
-pip-delete-this-directory.txt
-.pytest_cache/
+.env/
+.env
 
-# --- Playwright Reports ---
-reports/*.png
-reports/*.zip
-reports/*.html
-reports/**/*.png
-reports/**/*.zip
-reports/**/*.html
+# Playwright browser binaries
+playwright-report/
+playwright/.cache/
+playwright/.local-browsers/
 
-# Optional: if you save videos or traces in a folder
-traces/
-videos/
+# Reports and test output
+Reports/
+reports/
+*.html
 
-# --- JUnit or Allure style reports (optional) ---
-allure-results/
-junit-report/
-test-results/
-
-# --- VS Code ---
+# IDE and editor files
 .vscode/
-
-# --- JetBrains IDEs (PyCharm, etc.) ---
 .idea/
+*.swp
+*.sublime-workspace
+*.sublime-project
 
-# --- OS Specific ---
+# OS files
 .DS_Store
 Thumbs.db
 
-# --- Compiled files ---
-*.so
-*.dll
-*.dylib
-
-# --- Coverage ---
-htmlcov/
-.coverage
-coverage.xml
-*.cover
-.cache
-
-# --- Build ---
-build/
-dist/
-*.egg-info/
+# Misc
 

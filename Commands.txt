@@ -1,146 +1,145 @@
-Step 1: Setup Project Structure
+===============================
+✅ STEP 1: SETUP PROJECT STRUCTURE
+===============================
+
+# Create and enter project directory
 mkdir playwright_bdd_framework
 cd playwright_bdd_framework
+
+# Create virtual environment
 python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
 
-Step 2: Install Required Packages
+# Activate the environment
+# macOS/Linux:
+source venv/bin/activate
+# Windows:
+venv\Scripts\activate
+
+===============================
+✅ STEP 2: INSTALL REQUIRED PACKAGES
+===============================
+
+# Core packages
 pip install playwright behave pytest pytest-bdd
-pip install allure-behave  # Optional for reporting
-pip install python-dotenv  # For env configs
+
+# Optional: reporting and configuration
+pip install allure-behave           # Allure support (optional)
+pip install behave-html-formatter  # For HTML reporting
+pip install python-dotenv           # For environment config files
+
+# Install Playwright browsers
 python -m playwright install
-pip install behave-html-formatter
-pip install pytest pytest-bdd pytest-xdist playwright
-python -m playwright install
 
-✅ How to Run It
-Headless Mode:
+# (Optional) Install extra packages if needed
+pip install pytest-xdist            # For parallel execution
+pip install pytest-html             # For HTML reporting with pytest
 
-python test_runner.py --tag="@login"
-Debug/Headful Mode:
+===============================
+✅ HOW TO RUN TESTS
+===============================
 
-python Tests/test_runner.py --tag="@login" --debug
+▶️ Headless Mode:
+python tests/test_runner.py --tag="@login"
 
+🛠️ Debug/Headful Mode:
+python tests/test_runner.py --tag="@login" --debug
 
+===============================
+✅ BEHAVE TAG FILTERING
+===============================
 
-
-
-
-
-
-
-
-
-✅ HTML Reporting Configuration
-Generate HTML Report using behave-html-formatter.
-
-Run this command:
-
-behave -f pretty -f behave_html_formatter:HTMLFormatter -o reports/html_report.html --tags=@login
-
-✅ Run Feature Files by Tag
-Run only scenarios with @login tag:
-
+# Run only @login tag
 behave --tags=@login
 
-Run multiple tags (AND):
-
+# Run multiple tags (AND condition)
 behave --tags="@login and @smoke"
 
-✅ Run All with HTML Report
-
+# Run all tests with HTML report
 behave -f pretty -f behave_html_formatter:HTMLFormatter -o reports/html_report.html
-Open the report:
 
-open reports/html_report.html  # macOS/Linux
-start reports/html_report.html  # Windows
+# Open report
+start reports/html_report.html     # Windows
+open reports/html_report.html      # macOS/Linux
 
-✅ How to Use It test_runner.py
-🛠 Step 1: Set Your Tags
-In test_runner.py, modify this line:
+===============================
+✅ GENERATE HTML REPORTS
+===============================
 
-TAG_EXPRESSION = "@login or @smoke"
-You can use:
+# From CLI
+behave -f pretty -f behave_html_formatter:HTMLFormatter -o reports/html_report.html --tags=@login
 
-@tag1 or @tag2
-
-@tag1 and @tag2
-
-not @skip
-
-🛠 Step 2: Run the Tests
-From the root of your project (where features/ and reports/ folders are):
-
-python tests/test_runner.py
-
-📝 Reports
-You’ll get one report per .feature file inside reports/:
-
+# HTML reports will be generated per feature in:
 reports/login.html
 reports/search.html
 
-Just open them in any browser.
+# Open individual reports in browser
+start reports/login.html           # Windows
+open reports/login.html            # macOS/Linux
 
-✅ Summary of Features
-Feature	                         Supported
-Tag-based                        filtering	✅
-AND/OR tag expressions	✅
-HTML reports per file	✅
-Parallel execution	✅
-Friendly CLI-free config	✅
+===============================
+✅ CONFIGURE test_runner.py
+===============================
 
+# 🛠 Step 1: Set Your Tags
+# Inside tests/test_runner.py, set your expression:
+TAG_EXPRESSION = "@login or @smoke"
 
-✅ How to Use
-Save this file as tests/test_runner_gui.py
+# Examples:
+#   TAG_EXPRESSION = "@tag1 or @tag2"
+#   TAG_EXPRESSION = "@tag1 and @tag2"
+#   TAG_EXPRESSION = "not @skip"
+#   TAG_EXPRESSION = "@all"
 
-Run the GUI:
+# 🛠 Step 2: Run Tests
+python tests/test_runner.py
 
+# 📁 Reports will be generated in:
+reports/login.html
+reports/search.html
+
+===============================
+✅ USING THE TKINTER GUI
+===============================
+
+# Save this script as:
+tests/test_runner_gui.py
+
+# ▶️ Run GUI:
 python tests/test_runner_gui.py
 
-🔹 Run it after tests:
+===============================
+✅ COMBINE MULTIPLE HTML REPORTS
+===============================
+
+# After running tests:
 python combine_html_reports.py
-Then open:
 
-start reports/combined_report.html  # Windows
-open reports/combined_report.html   # macOS/Linux
-✅ Summary
-Feature	File
-Tkinter GUI Test Runner	tests/test_runner_gui.py
-Combine All HTML Reports	combine_html_reports.py
-Individual Reports	reports/*.html
-One HTML Report for All	reports/combined_report.html
+# Open combined report:
+start reports/combined_report.html      # Windows
+open reports/combined_report.html       # macOS/Linux
 
+===============================
+✅ SUMMARY OF FEATURES
+===============================
 
+Feature                         Supported
+------------------------------  ------------------
+Tag-based filtering             ✅ Yes
+AND/OR tag expressions          ✅ Yes
+HTML reports per feature        ✅ Yes
+Parallel execution              ✅ Yes
+Friendly CLI config             ✅ Yes
+GUI-based runner                ✅ Yes
+Combined HTML report            ✅ Yes
 
-start reports/login.html
+===============================
+✅ SAMPLE TERMINAL OUTPUT
+===============================
 
-
-✅ How to Use
-Update this line with your tag expression:
-
-TAG_EXPRESSION = "@login or @smoke"
-Use @all to run everything:
-
-TAG_EXPRESSION = "@all"
-Run the test runner from project root:
-
-python tests/test_runner.py
-Reports will be generated in the reports/ folder as:
-
-reports/login.html
-reports/checkout.html
-...
-✅ Example Terminal Output
 🚀 Running with tag filter: @login
-🧪 Found 2 feature file(s).
-▶️ Running: cd "C:\YourProject" && behave "features\login.feature" --tags="@login" ...
+🧪 Found 2 feature file(s)
+▶️ Running: behave features/login.feature --tags="@login"
 ...
-✅ Test execution finished.
-📁 Reports are in: reports
-✅ Summary
-Feature	Supported in test_runner.py
-Parallel feature execution	✅ Yes
-Tag filtering	✅ Yes (@login, @smoke)
-HTML report per feature	✅ Yes
-Friendly CLI config	✅ One file to edit & run
-Same behavior as GUI	✅ Matches test_runner_gui.py
+✅ Test execution finished
+📁 Reports available at: reports/
+

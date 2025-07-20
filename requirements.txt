@@ -1,23 +1,30 @@
 # === Core BDD and browser automation ===
-behave
-playwright
+behave>=1.2.6
+playwright>=1.44.0
 
 # === For HTML report generation ===
 behave-html-formatter @ git+https://github.com/OpusVL/behave-html-formatter.git
 
 # === Optional: For file handling, CLI, etc. ===
-colorama
-tqdm
+colorama>=0.4.6
+tqdm>=4.66.4
 
 # === GUI Support ===
 tk
 
 # === Testing tools (for future pytest integration) ===
-pytest
-pytest-html
+pytest>=8.2.2
+pytest-html>=4.1.1
 
-# === Parallel support if you want behave-parallel in future ===
-# behave-parallel @ git+https://github.com/seleniumbase/behave-parallel.git  # Optional
+# === Parallel support (optional) ===
+# behave-parallel @ git+https://github.com/seleniumbase/behave-parallel.git
 
 # === Recommended for consistent installs ===
-setuptools
+setuptools>=69.5.1
+
+# === Environment variable support ===
+python-dotenv>=1.0.1
+
+# === Type hints and linting (optional, for development) ===
+# mypy>=1.10.0
+# flake8>=7.0.0
