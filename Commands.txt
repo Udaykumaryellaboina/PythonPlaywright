@@ -91,7 +91,7 @@ TAG_EXPRESSION = "@login or @smoke"
 #   TAG_EXPRESSION = "@all"
 
 # 🛠 Step 2: Run Tests
-python tests/test_runner.py
+python Tests/test_runner.py
 
 # 📁 Reports will be generated in:
 reports/login.html
