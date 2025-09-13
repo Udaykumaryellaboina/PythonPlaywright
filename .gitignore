@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.egg
+*.egg-info/
+dist/
+build/
+*.log
+
+# Virtual environments
+venv/
+ENV/
+.env/
+.env
+
+# Playwright browser binaries
+playwright-report/
+playwright/.cache/
+playwright/.local-browsers/
+
+# Reports and test output
+Reports/
+reports/
+*.html
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+
