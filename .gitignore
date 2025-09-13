@@ -22,9 +22,9 @@ playwright/.cache/
 playwright/.local-browsers/
 
 # Reports and test output
-Reports/
-reports/
-*.html
+#Reports/
+#reports/
+#*.html
 
 # IDE and editor files
 .vscode/
