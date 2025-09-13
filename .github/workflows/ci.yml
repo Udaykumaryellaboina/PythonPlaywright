@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # ---------------- Checkout ----------------
+    # ---------------- Checkout code ----------------
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -21,7 +21,7 @@ jobs:
       with:
         python-version: '3.11'
 
-    # ---------------- Install Dependencies ----------------
+    # ---------------- Install dependencies ----------------
     - name: Install dependencies
       run: |
         python -m venv venv
@@ -30,23 +30,18 @@ jobs:
         pip install -r requirements.txt
         python -m playwright install
 
-    # ---------------- Run Behave Tests ----------------
+    # ---------------- Run Behave BDD tests ----------------
     - name: Run Behave BDD tests
       run: |
         source venv/bin/activate
         mkdir -p PythonPlaywright/reports
-        cd PythonPlaywright
-        behave Features \
-          -f pretty \
-          -f behave_html_formatter:HTMLFormatter \
-          -o reports/
+        python PythonPlaywright/Tests/test_runner.py
 
-    # ---------------- Combine Reports (Optional) ----------------
+    # ---------------- Combine HTML reports (Optional) ----------------
     - name: Combine HTML reports
       run: |
         source venv/bin/activate
-        cd PythonPlaywright
-        python combine_html_reports.py  # Make sure this script exists and merges reports/*.html to reports/combined_report.html
+        python PythonPlaywright/combine_html_reports.py
 
     # ---------------- Upload Combined Report ----------------
     - name: Upload Combined HTML Report
