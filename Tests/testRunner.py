@@ -1,7 +1,8 @@
 import os
 import glob
+import multiprocessing
 import argparse
-import subprocess
+from datetime import datetime
 
 # === PROJECT PATHS ===
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -14,50 +15,58 @@ REPORTS_DIR = os.path.join(BASE_DIR, "reports")
 
 # === CLI ARGUMENT PARSER ===
 parser = argparse.ArgumentParser(description="Run Behave tests with debug support.")
-parser.add_argument("--tag", help="Tag expression to filter scenarios (run all if omitted)")
+parser.add_argument("--tag", help="Tag expression to filter scenarios (run all if omitted)", default=None)
 parser.add_argument("--debug", action="store_true", help="Enable debug/headful browser mode")
+parser.add_argument("--workers", type=int, default=4, help="Number of parallel processes")
 args = parser.parse_args()
 
 TAG_EXPRESSION = args.tag
 DEBUG_MODE = args.debug
+WORKERS = args.workers
 
 # Set environment variable for Playwright headless toggle
 os.environ["DEBUG"] = "true" if DEBUG_MODE else "false"
 
-def run_behave(features_dir, reports_dir):
-    os.makedirs(reports_dir, exist_ok=True)
+def run_feature(feature_file):
+    feature_name = os.path.basename(feature_file).replace(".feature", "")
+    timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    html_report = os.path.join(REPORTS_DIR, f"{feature_name}_{timestamp}.html")
 
-    if not os.path.isdir(features_dir):
-        print(f"❌ Features directory not found: {features_dir}")
-        return
+    # Only add --tags if a tag expression is provided
+    tag_filter = f'--tags="{TAG_EXPRESSION}"' if TAG_EXPRESSION else ""
 
-    # Discover all feature files
-    feature_files = glob.glob(os.path.join(features_dir, "*.feature"))
+    cmd = (
+        f'behave "{feature_file}" {tag_filter} '
+        f'-f behave_html_formatter:HTMLFormatter -o "{html_report}"'
+    )
+
+    print(f"\n▶️ Running: {feature_file}")
+    print(f"🛠️ Debug mode: {'ON' if DEBUG_MODE else 'OFF'}")
+    exit_code = os.system(cmd)
+    if exit_code != 0:
+        print(f"❌ Feature failed: {feature_file}")
+
+def main():
+    os.makedirs(REPORTS_DIR, exist_ok=True)
+
+    feature_files = glob.glob(os.path.join(FEATURES_DIR, "*.feature"))
     if not feature_files:
-        print(f"❌ No feature files found in {features_dir}")
+        print(f"❌ No .feature files found in {FEATURES_DIR}.")
         return
 
-    print(f"🚀 Running {len(feature_files)} feature(s) from: {features_dir}")
-    print(f"📄 Reports will be saved in: {reports_dir}")
-
-    # Build behave command
-    cmd = [
-        "behave",
-        features_dir,
-        "-f", "behave_html_formatter:HTMLFormatter",
-        "-o", reports_dir
-    ]
-    if TAG_EXPRESSION:
-        cmd.extend(["--tags", TAG_EXPRESSION])
-
-    # Run Behave
-    print(f"▶️ Running command: {' '.join(cmd)}")
-    subprocess.run(cmd, check=True)
-    print("\n✅ Test execution finished.")
-
-if __name__ == "__main__":
-    run_behave(FEATURES_DIR, REPORTS_DIR)
     if TAG_EXPRESSION:
         print(f"🚀 Running with tag filter: {TAG_EXPRESSION}")
     else:
         print("🚀 Running all scenarios (no tag filter).")
+    print(f"🧪 Found {len(feature_files)} feature file(s) in {FEATURES_DIR}.")
+    print(f"📄 HTML reports will be saved in: {REPORTS_DIR}")
+
+    pool = multiprocessing.Pool(processes=min(WORKERS, len(feature_files)))
+    pool.map(run_feature, feature_files)
+    pool.close()
+    pool.join()
+
+    print(f"\n✅ Test execution finished.")
+
+if __name__ == "__main__":
+    main()
