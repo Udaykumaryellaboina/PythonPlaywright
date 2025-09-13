@@ -26,21 +26,24 @@ jobs:
         pip install -r requirements.txt
         python -m playwright install
 
-    - name: Run Behave tests (features)
+    - name: Run Behave BDD tests
       run: |
         source venv/bin/activate
-        behave PythonPlaywright/Features \
-          -f pretty \
-          -f behave_html_formatter:HTMLFormatter \
-          -o reports/html_report.html
+        python Tests/test_runner.py
 
-    - name: Run Behave tests (steps)  # optional, usually not needed
+    - name: Combine HTML reports
       run: |
         source venv/bin/activate
-        behave PythonPlaywright/Steps
+        python combine_html_reports.py
 
-    - name: Upload HTML report
+    - name: Upload Combined HTML Report
       uses: actions/upload-artifact@v4
       with:
-        name: html-report
-        path: reports/html_report.html
+        name: combined-html-report
+        path: reports/combined_report.html
+
+    - name: Upload Individual Feature Reports
+      uses: actions/upload-artifact@v4
+      with:
+        name: feature-html-reports
+        path: reports/*.html
