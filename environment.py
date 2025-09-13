@@ -39,6 +39,11 @@ def after_scenario(context, scenario):
     context.context.close()
     context.browser.close()
     context.playwright.stop()
-
+# environment.py
+def after_step(context, step):
+    if step.status == "failed":
+        if hasattr(context, "page"):
+            screenshot_path = f"screenshots/{step.name}.png"
+            context.page.screenshot(path=screenshot_path)
 def after_all(context):
     print(f"📁 Reports are available at: {context.reports_dir.absolute()}")
