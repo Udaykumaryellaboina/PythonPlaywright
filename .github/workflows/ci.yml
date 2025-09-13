@@ -30,12 +30,16 @@ jobs:
     - name: Run Behave BDD tests
       run: |
         source venv/bin/activate
-        python Tests/test_runner.py  # your runner should run all feature files and generate individual HTML reports in reports/
+        mkdir -p reports
+        behave PythonPlaywright/features \
+          -f pretty \
+          -f behave_html_formatter:HTMLFormatter \
+          -o reports/
 
     - name: Combine HTML reports
       run: |
         source venv/bin/activate
-        python combine_html_reports.py  # combines all feature reports into reports/combined_report.html
+        python combine_html_reports.py  # optional if you want a single combined report
 
     - name: Upload Combined HTML Report
       uses: actions/upload-artifact@v4
