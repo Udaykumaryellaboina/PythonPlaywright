@@ -11,14 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # ---------------- Checkout ----------------
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # ---------------- Setup Python ----------------
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
+    # ---------------- Install Dependencies ----------------
     - name: Install dependencies
       run: |
         python -m venv venv
@@ -27,28 +30,34 @@ jobs:
         pip install -r requirements.txt
         python -m playwright install
 
+    # ---------------- Run Behave Tests ----------------
     - name: Run Behave BDD tests
       run: |
         source venv/bin/activate
-        mkdir -p reports
-        behave PythonPlaywright/Features \
+        mkdir -p PythonPlaywright/reports
+        cd PythonPlaywright
+        behave Features \
           -f pretty \
           -f behave_html_formatter:HTMLFormatter \
           -o reports/
 
+    # ---------------- Combine Reports (Optional) ----------------
     - name: Combine HTML reports
       run: |
         source venv/bin/activate
-        python combine_html_reports.py  # optional if you want a single combined report
+        cd PythonPlaywright
+        python combine_html_reports.py  # Make sure this script exists and merges reports/*.html to reports/combined_report.html
 
+    # ---------------- Upload Combined Report ----------------
     - name: Upload Combined HTML Report
       uses: actions/upload-artifact@v4
       with:
         name: combined-html-report
-        path: reports/combined_report.html
+        path: PythonPlaywright/reports/combined_report.html
 
+    # ---------------- Upload Individual Feature Reports ----------------
     - name: Upload Individual Feature Reports
       uses: actions/upload-artifact@v4
       with:
         name: feature-html-reports
-        path: reports/*.html
+        path: PythonPlaywright/reports/*.html
