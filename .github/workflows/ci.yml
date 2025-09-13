@@ -39,19 +39,6 @@ jobs:
         mkdir -p reports
         python Tests/test_runner.py
 
-    # ---------------- Combine HTML reports (Optional) ----------------
-    - name: Combine HTML reports
-      run: |
-        source venv/bin/activate
-        python combine_html_reports.py
-
-    # ---------------- Upload Combined HTML Report ----------------
-    - name: Upload Combined HTML Report
-      uses: actions/upload-artifact@v4
-      with:
-        name: combined-html-report
-        path: reports/combined_report.html
-
     # ---------------- Upload Individual Feature Reports ----------------
     - name: Upload Individual Feature Reports
       uses: actions/upload-artifact@v4
