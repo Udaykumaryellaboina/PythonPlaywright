@@ -31,7 +31,7 @@ jobs:
       run: |
         source venv/bin/activate
         mkdir -p reports
-        behave PythonPlaywright/features \
+        behave PythonPlaywright/Features \
           -f pretty \
           -f behave_html_formatter:HTMLFormatter \
           -o reports/
