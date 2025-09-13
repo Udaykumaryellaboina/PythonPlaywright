@@ -34,6 +34,8 @@ jobs:
     - name: Run Behave BDD tests
       run: |
         source venv/bin/activate
+        # Clear old reports
+        rm -rf reports/*
         mkdir -p reports
         python Tests/test_runner.py
 
