@@ -23,18 +23,23 @@ jobs:
       run: |
         python -m venv venv
         source venv/bin/activate
+        pip install --upgrade pip
         pip install -r requirements.txt
         python -m playwright install
 
     - name: Run Behave BDD tests
       run: |
         source venv/bin/activate
-        python Tests/test_runner.py
+        mkdir -p reports
+        behave PythonPlaywright/Features \
+          -f pretty \
+          -f behave_html_formatter:HTMLFormatter \
+          -o reports/
 
     - name: Combine HTML reports
       run: |
         source venv/bin/activate
-        python combine_html_reports.py
+        python combine_html_reports.py  # optional if you want a single combined report
 
     - name: Upload Combined HTML Report
       uses: actions/upload-artifact@v4
