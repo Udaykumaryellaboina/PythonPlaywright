@@ -3,7 +3,7 @@ behave>=1.2.6
 playwright>=1.44.0
 
 # === For HTML report generation ===
-behave-html-formatter @ git+https://github.com/OpusVL/behave-html-formatter.git
+behave-html-formatter>=0.9.10
 
 # === Optional: For file handling, CLI, etc. ===
 colorama>=0.4.6
